@@ -3,10 +3,9 @@
   "private": true,
   "version": "0.0.1",
   "description": "Fragments UI testing web app",
-  "source": "src/index.html",
   "scripts": {
-    "start": "parcel",
-    "build": "parcel build",
+    "start": "parcel index.html",
+    "build": "parcel build index.html --dist-dir ./dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

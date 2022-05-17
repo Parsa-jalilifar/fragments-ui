@@ -1,2 +1,7 @@
 # fragments-ui
-This is for DPS955 Seneca College.
+Fragments UI testing web app
+
+How to run the UI:
+```
+$ npm start
+```

@@ -7,11 +7,7 @@ yarn-error.log*
 lerna-debug.log*
 
 # Parcel
-dist/
 .parcel-cache/
-
-# Don't include .env, which might have sensitive information
-.env
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

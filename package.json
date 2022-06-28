@@ -6,6 +6,7 @@
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html --dist-dir ./dist",
+    "lint": "eslint --config .eslintrc.js src/**.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

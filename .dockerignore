@@ -4,4 +4,6 @@ node_modules/
 .env
 .git/
 .gitignore
+.eslintrc.js
+.prettier*
 *.md

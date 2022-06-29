@@ -2,23 +2,43 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <title>Fragments UI</title>
-    <link rel="stylesheet" href="https://unpkg.com/bamboo.css" />
-    <script type="module" src="src/app.js"></script>
+  <meta charset="utf-8" />
+  <title>Fragments UI</title>
+  <link rel="stylesheet" href="https://unpkg.com/bamboo.css" />
+  <script type="module" src="src/app.js"></script>
 </head>
 
 <body>
-    <h1>Fragments UI</h1>
+  <h1>Fragments UI</h1>
+
+  <section>
+    <nav><button id="login">Login</button> <button id="logout">Logout</button></nav>
+  </section>
+
+
+  <section hidden id="user">
+    <h2>Hello <span class="username"></span>!</h2>
+  </section>
+
+  <form id="fragment-section">
     <section>
-        <nav><button id="login">Login</button> <button id="logout">Logout</button></nav>
+      <label for="fragments-types">Select a fragment type:</label>
+      <select id="fragments-types" name="fragments-types">
+        <option value="text/plain">text/plain</option>
+        <option value="text/markdown">text/markdown</option>
+        <option value="text/html">text/html</option>
+        <option value="application/json">application/json</option>
+      </select>
     </section>
-    <section hidden id="user">
-        <h2>Hello <span class="username"></span>!</h2>
+    <br>
+    <section>
+      <label for="fragment-data">Enter the fragment data:</label>
+      <textarea name="fragment-data" id="fragment-data" cols="30" rows="10" required></textarea>
     </section>
-    <section id="fragment-section">
-        <button id="add-fragment">Add Fragment</button>
-    </section>
+
+    <br><br>
+    <button type="submit" id="add-fragment">Add Fragment</button>
+  </form>
 </body>
 
 </html>

@@ -8,12 +8,14 @@ const apiUrl = process.env.API_URL || 'http://localhost:8080';
  * fragments microservice (currently only running locally). We expect a user
  * to have an `idToken` attached, so we can send that along with the request.
  */
-export async function getUserFragments(user) {
+export async function getUserFragments(user, expand = 0) {
   console.log('Requesting user fragments data...');
+
   try {
-    const res = await fetch(`${apiUrl}/v1/fragments`, {
-      // Generate headers with the proper Authorization bearer token to pass
-      headers: user.authorizationHeaders(),
+    const res = await fetch(`${apiUrl}/v1/fragments?expand=${expand}`, {
+      headers: {
+        Authorization: `Bearer ${user.idToken}`,
+      },
     });
 
     if (!res.ok) {
@@ -22,36 +24,40 @@ export async function getUserFragments(user) {
 
     const data = await res.json();
     console.log('Got user fragments data', { data });
-    if(data['fragments'].length != 0)  getFragmentData(user, data['fragments'].at(-1));
   } catch (err) {
     console.error('Unable to call GET /v1/fragment', { err });
   }
 }
 
-export async function postUserFragment(user) {
+export async function postUserFragment(user, contentType, fragmentData) {
   try {
-    await fetch(`${apiUrl}/v1/fragments`, {
-      method: "POST",
+    const res = await fetch(`${apiUrl}/v1/fragments`, {
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${user.idToken}`,
-        "Content-Type": "text/plain",
+        'Content-Type': contentType,
       },
-      body: "This is a fragment",
+      body: fragmentData,
     });
+
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
   } catch (err) {
-    console.error("Unable to call POST /v1/fragment");
+    console.error('Unable to call POST /v1/fragment');
   }
 }
 
-export async function getFragmentData(user, id) {
-  console.log(`Requesting fragment data by id: ${id}`);
+export async function getFragmentMetaData(user, id) {
+  console.log(`Requesting a fragment data by using its id: ${id}`);
 
   try {
-    const res = await fetch(`${apiUrl}/v1/fragments/${id}`, {
+    const res = await fetch(`${apiUrl}/v1/fragments/${id}/info`, {
       headers: {
         Authorization: `Bearer ${user.idToken}`,
       },
     });
+
     if (!res.ok) {
       throw new Error(`${res.status} ${res.statusText}`);
     }
@@ -59,6 +65,6 @@ export async function getFragmentData(user, id) {
     const data = await res.text();
     console.log(data);
   } catch (err) {
-    console.error("Unable to call GET /v1/fragments/:id", { err });
+    console.error('Unable to call GET /v1/fragments/:id/info', { err });
   }
 }

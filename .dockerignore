@@ -1,7 +1,6 @@
 .parcel-cache/
 dist/
 node_modules/
-.env
 .git/
 .gitignore
 .eslintrc.js

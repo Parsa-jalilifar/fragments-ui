@@ -1,0 +1,26 @@
+#fragment-view-section {
+  word-break: initial;
+  overflow: auto;
+}
+
+#fragment-view-section td {
+  padding: 10px 15px 10px 0px;
+}
+
+.buttonsCell {
+  min-width: 160px;
+  min-height: 80px;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.ownerId {
+  word-break: break-word;
+  min-width: 300px;
+}
+
+.id {
+  word-break: break-word;
+  min-width: 240px;
+}

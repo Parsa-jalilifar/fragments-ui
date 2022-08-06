@@ -5,6 +5,7 @@
   <meta charset="utf-8" />
   <title>Fragments UI</title>
   <link rel="stylesheet" href="https://unpkg.com/bamboo.css" />
+  <link rel="stylesheet" href="src/css/main.css" />
   <script type="module" src="src/app.js"></script>
 </head>
 
@@ -15,12 +16,13 @@
     <nav><button id="login">Login</button> <button id="logout">Logout</button></nav>
   </section>
 
-
   <section hidden id="user">
     <h2>Hello <span class="username"></span>!</h2>
   </section>
 
   <form id="fragment-section">
+    <h4>Create fragment</h4>
+
     <section>
       <label for="fragments-types">Select a fragment type:</label>
       <select id="fragments-types" name="fragments-types">
@@ -28,17 +30,62 @@
         <option value="text/markdown">text/markdown</option>
         <option value="text/html">text/html</option>
         <option value="application/json">application/json</option>
+        <option value="image/png">image/png</option>
+        <option value="image/jpeg">image/jpeg</option>
+        <option value="image/webp">image/webp</option>
+        <option value="image/gif">image/gif</option>
       </select>
     </section>
-    <br>
-    <section>
-      <label for="fragment-data">Enter the fragment data:</label>
-      <textarea name="fragment-data" id="fragment-data" cols="30" rows="10" required></textarea>
+    <br />
+
+    <section hidden id="img-section-uploader">
+      <label for="fragment-img-data">Import your images:</label>
+      <input id="fragment-img-data" name="fragment-img-data" type="file" multiple />
     </section>
 
-    <br><br>
+    <section id="txt-section-uploader">
+      <label for="fragment-txt-data">Enter the fragment data:</label>
+      <textarea id="fragment-txt-data" name="fragment-txt-data" cols="30" rows="10"></textarea>
+    </section>
+
+    <br /><br />
     <button type="submit" id="add-fragment">Add Fragment</button>
   </form>
+
+  <section hidden id="fragment-edith-section">
+    <h4>Update fragment data</h4>
+
+    <section hidden id="img-section-edith-uploader">
+      <label for="fragment-img-edith-data">Import your new images:</label>
+      <input id="fragment-img-edith-data" name="fragment-img-edith-data" type="file" multiple />
+    </section>
+
+    <section id="txt-section-edith-uploader">
+      <label for="fragment-txt-edith-data">Enter the new fragment data:</label>
+      <textarea id="fragment-txt-edith-data" name="fragment-txt-edith-data" cols="30" rows="10"></textarea>
+    </section>
+
+    <br /><br />
+    <button type="submit" id="update-fragment">Update Fragment</button>
+  </section>
+
+  <section id="fragment-view-section">
+    <h4>Fragments Table</h4>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>OWNER ID</th>
+          <th>ID</th>
+          <th>TYPE</th>
+          <th>CREATED</th>
+          <th>UPDATED</th>
+          <th>SIZE</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </section>
 </body>
 
 </html>

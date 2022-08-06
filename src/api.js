@@ -24,6 +24,7 @@ export async function getUserFragments(user, expand = 0) {
 
     const data = await res.json();
     console.log('Got user fragments data', { data });
+    return data['fragments'];
   } catch (err) {
     console.error('Unable to call GET /v1/fragment', { err });
   }
@@ -66,5 +67,46 @@ export async function getFragmentMetaData(user, id) {
     console.log(data);
   } catch (err) {
     console.error('Unable to call GET /v1/fragments/:id/info', { err });
+  }
+}
+
+export async function deleteUserFragment(user, id) {
+  console.log('Delete a fragment data by using its ID');
+  try {
+    const res = await fetch(`${apiUrl}/v1/fragments/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${user.idToken}`,
+      },
+    });
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+    const data = await res.json();
+    console.log('Deleted fragments data', { data });
+  } catch (err) {
+    console.error('Unable to call DELETE /v1/fragments', { err });
+  }
+}
+
+export async function updateUserFragmentData(user, id, contentType, fragmentData) {
+  console.log('Update fragment with a new data');
+
+  try {
+    const res = await fetch(`${apiUrl}/v1/fragments/${id}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${user.idToken}`,
+        'Content-Type': contentType,
+      },
+      body: fragmentData,
+    });
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+    const data = await res.json();
+    console.log('Updated fragments data', { data });
+  } catch (err) {
+    console.error('Unable to call PUT /v1/fragments', { err });
   }
 }

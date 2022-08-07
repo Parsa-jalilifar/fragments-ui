@@ -6,6 +6,7 @@ import {
   postUserFragment,
   deleteUserFragment,
   updateUserFragmentData,
+  getFragmentData,
 } from './api';
 
 async function init() {
@@ -30,10 +31,21 @@ async function init() {
   const fragmentTextEdithData = document.getElementById('fragment-txt-edith-data');
   const updateFragmentBtn = document.getElementById('update-fragment');
   const tableBody = document.getElementById('tableBody');
+  const findFragmentData = document.getElementById('find-fragment-data');
+  const findFragmentDataId = document.getElementById('find-data-id');
+  const findFragmentDataExt = document.getElementById('find-data-ext');
+  const dataRequestSection = document.getElementById('data-request-section');
+  const imgDisplay = document.getElementById('image-display');
+  const noImgDisplay = document.getElementById('noImage-display');
+  const edithIds = document.querySelectorAll('.edithId');
+
+  // image input for upload
+  var inputImageUpload;
 
   // for edith request
   var selectedFragmentId;
   var selectedFragmentType;
+  var inputImageEdith;
 
   // Wire up event handlers to deal with login and logout.
   loginBtn.onclick = () => {
@@ -55,6 +67,9 @@ async function init() {
     fragmentSection.hidden = true;
     fragmentViewSection.hidden = true;
     fragmentEdithSection.hidden = true;
+    imgDisplay.hidden = true;
+    noImgDisplay.hidden = true;
+    dataRequestSection.hidden = true;
     return;
   }
 
@@ -72,14 +87,42 @@ async function init() {
     }
   };
 
+  fragmentImageData.onchange = () => {
+    inputImageUpload = fragmentImageData.files[0];
+  };
+
+  fragmentImageEdithData.onchange = () => {
+    inputImageEdith = fragmentImageEdithData.files[0];
+  };
+
   addFragmentBtn.onclick = async () => {
-    let postData = fragmentTextData.value || fragmentImageData.value;
+    let postData = fragmentTextData.value || inputImageUpload;
     await postUserFragment(user, fragmentsTypes.value, postData);
+    location.reload();
+  };
+
+  findFragmentData.onclick = async () => {
+    let ext = findFragmentDataExt.value || '';
+    let { contentType, data } = await getFragmentData(user, findFragmentDataId.value, ext);
+
+    noImgDisplay.innerHTML = '';
+    imgDisplay.hidden = true;
+
+    if (contentType.startsWith('image/')) {
+      imgDisplay.src = URL.createObjectURL(data);
+      imgDisplay.hidden = false;
+    } else {
+      data = contentType.startsWith('application/json') ? JSON.stringify(data) : data;
+      let txt = document.createTextNode(data);
+      noImgDisplay.appendChild(txt);
+      noImgDisplay.hidden = false;
+    }
   };
 
   updateFragmentBtn.onclick = async () => {
-    let edithData = fragmentImageEdithData.value || fragmentTextEdithData.value;
+    let edithData = fragmentTextEdithData.value || inputImageEdith;
     await updateUserFragmentData(user, selectedFragmentId, selectedFragmentType, edithData);
+    location.reload();
   };
 
   // Update the UI to welcome the user
@@ -110,9 +153,19 @@ async function init() {
 
       deleteBtn.onclick = async () => {
         await deleteUserFragment(user, fragment['id']);
+        location.reload();
       };
 
       edithBtn.onclick = async () => {
+        selectedFragmentId = fragment.id;
+        selectedFragmentType = fragment.type;
+
+        edithIds.forEach((edithId) => (edithId.innerHTML = ''));
+
+        edithIds.forEach((edithId) =>
+          edithId.appendChild(document.createTextNode(selectedFragmentId))
+        );
+
         fragmentEdithSection.hidden = false;
 
         if (fragment.type.split('/')[0] == 'image') {
@@ -122,9 +175,6 @@ async function init() {
           imgEdithUploaderSection.hidden = true;
           txtEdithUploaderSection.hidden = false;
         }
-
-        selectedFragmentId = fragment.id;
-        selectedFragmentType = fragment.type;
       };
 
       deleteBtn.appendChild(deleteBtnTxt);

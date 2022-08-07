@@ -52,22 +52,7 @@
     <button type="submit" id="add-fragment">Add Fragment</button>
   </form>
 
-  <section hidden id="fragment-edith-section">
-    <h4>Update fragment data</h4>
 
-    <section hidden id="img-section-edith-uploader">
-      <label for="fragment-img-edith-data">Import your new images:</label>
-      <input id="fragment-img-edith-data" name="fragment-img-edith-data" type="file" multiple />
-    </section>
-
-    <section id="txt-section-edith-uploader">
-      <label for="fragment-txt-edith-data">Enter the new fragment data:</label>
-      <textarea id="fragment-txt-edith-data" name="fragment-txt-edith-data" cols="30" rows="10"></textarea>
-    </section>
-
-    <br /><br />
-    <button type="submit" id="update-fragment">Update Fragment</button>
-  </section>
 
   <section id="data-request-section">
     <h4>Get a fragment data:</h4>
@@ -84,6 +69,23 @@
   <section id="fragment-data-display">
     <img hidden id="image-display" alt="fragment data" />
     <p id="noImage-display"></p>
+  </section>
+
+  <section hidden id="fragment-edith-section">
+    <h4>Update fragment data</h4>
+
+    <section hidden id="img-section-edith-uploader">
+      <label for="fragment-img-edith-data">Import your new images: <span class="edithId"></span></label>
+      <input id="fragment-img-edith-data" name="fragment-img-edith-data" type="file" multiple />
+    </section>
+
+    <section id="txt-section-edith-uploader">
+      <label for="fragment-txt-edith-data">Enter the new fragment data: <span class="edithId"></span></label>
+      <textarea id="fragment-txt-edith-data" name="fragment-txt-edith-data" cols="30" rows="10"></textarea>
+    </section>
+
+    <br /><br />
+    <button type="submit" id="update-fragment">Update Fragment</button>
   </section>
 
   <section id="fragment-view-section">

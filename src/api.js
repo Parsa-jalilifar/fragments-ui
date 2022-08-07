@@ -50,7 +50,7 @@ export async function postUserFragment(user, contentType, fragmentData) {
 }
 
 export async function getFragmentMetaData(user, id) {
-  console.log(`Requesting a fragment data by using its id: ${id}`);
+  console.log(`Requesting a fragment meta data by using its id: ${id}`);
 
   try {
     const res = await fetch(`${apiUrl}/v1/fragments/${id}/info`, {
@@ -67,6 +67,36 @@ export async function getFragmentMetaData(user, id) {
     console.log(data);
   } catch (err) {
     console.error('Unable to call GET /v1/fragments/:id/info', { err });
+  }
+}
+
+export async function getFragmentData(user, id, ext) {
+  console.log(`Requesting a fragment data by using its id: ${id}`);
+
+  try {
+    const res = await fetch(`${apiUrl}/v1/fragments/${id}${ext}`, {
+      headers: {
+        Authorization: `Bearer ${user.idToken}`,
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+    let data;
+    console.log(res.headers.get('content-type'));
+
+    if (res.headers.get('content-type').startsWith('text/')) {
+      data = await res.text();
+    } else if (res.headers.get('content-type').startsWith('application/json')) {
+      data = await res.json();
+    } else {
+      data = await res.blob();
+    }
+    console.log({ contentType: res.headers.get('content-type'), data: data });
+    return { contentType: res.headers.get('content-type'), data: data };
+  } catch (err) {
+    console.error('Unable to call GET /v1/fragments/:id.ext', { err });
   }
 }
 

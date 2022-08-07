@@ -20,7 +20,7 @@
     <h2>Hello <span class="username"></span>!</h2>
   </section>
 
-  <form id="fragment-section">
+  <form id="fragment-section" onsubmit="return false">
     <h4>Create fragment</h4>
 
     <section>
@@ -67,6 +67,23 @@
 
     <br /><br />
     <button type="submit" id="update-fragment">Update Fragment</button>
+  </section>
+
+  <section id="data-request-section">
+    <h4>Get a fragment data:</h4>
+
+    <label for="find-data-id">Fragment Id:</label>
+    <input type="text" name="find-data-id" id="find-data-id">
+
+    <label for="find-data-ext">Fragment Id Extension (Optional): </label>
+    <input type="text" name="find-data-ext" id="find-data-ext">
+    <br /> <br />
+    <button type="submit" id="find-fragment-data">Find Data</button>
+  </section>
+  <br />
+  <section id="fragment-data-display">
+    <img hidden id="image-display" alt="fragment data" />
+    <p id="noImage-display"></p>
   </section>
 
   <section id="fragment-view-section">
